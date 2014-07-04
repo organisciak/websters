@@ -3,7 +3,7 @@ import csv
 
 def main():
     MATCH_ENTRY_TITLE = re.compile('^([A-Z\';]{2,}[- ]?)+$')
-    SLANG = re.compile("\[.{0,20}([Ss]lang|[Cc]ollo).{0,20}\]")
+    SLANG = re.compile("\[.{0,20}([Ss]lang|[Cc]ollo|[Vv]ulgar).{0,20}\]")
 
     entry = None
     slang_builder = [] 
