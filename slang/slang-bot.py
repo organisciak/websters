@@ -3,8 +3,8 @@ import codecs
 import logging
 
 def main():
-    CSECRET = open("private/consumer-secret.txt").read()
-    ATSECRET = open("private/access-token-secret.txt").read()
+    CSECRET = open("../private/consumer-secret.txt").read().strip()
+    ATSECRET = open("../private/access-token-secret.txt").read().strip()
     logging.basicConfig(filename="slang.log", level='DEBUG')
     api = twitter.Api(consumer_key='yB4fCtQhEy7tN03YtZRRIMhU4',
             consumer_secret=CSECRET,
@@ -21,7 +21,7 @@ def main():
 
     if len(message) > 140:
         logging.error("Message too long")
-        too_long = codec.open("toolong.txt", "a", encoding="ISO-8859-1")
+        too_long = codecs.open("toolong.txt", "a", encoding="ISO-8859-1")
         too_long.write(message)
         too_long.close()
         return
