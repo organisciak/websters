@@ -1,0 +1,23 @@
+Understanding Webster's
+========================================================
+
+First, I extracted all the candidates for quote attributions. These:
+ 
+ * Occur at the end of a line (misses mid-line citation, or when there's a line break between citation and author)
+ * Have 1-4 words, all capitalized and with alphanumeric characters (what does this miss?):w
+ 
+```{r}
+require(data.table)
+require(ggplot2)
+require(ggthemes)
+data = fread("../data/attributions.csv")
+data[, list(citations=.N), by=entry][order(-citations)][citations > 10]
+top100 <- data[, list(citations=.N), by=attribution][order(-citations)][citations > 10][1:100]
+top100$attribution <- factor(top100$attribution, top100$attribution[100:1]) # The second arg is order related, so we don't sort by alphabet
+top100
+```
+
+```{r fig.width=9, fig.height=13}
+ggplot(top100[1:55], aes(y=citations, x=attribution, label=citations))+geom_bar(stat="identity", fill="#D51E33")+coord_flip()+theme_economist()+ggtitle("Most cited sources in Webster's \nRevised Unabridged Dictionary (1913)")+geom_text(hjust=0, size=4, aes(y=citations+50))+theme(axis.text.x = element_blank(), panel.grid.major=element_blank(), plot.background = element_rect(fill = rgb(240, 240, 240, max = 255)), panel.background = element_rect(fill = rgb(240, 240, 240, max = 255)), axis.line.x=element_blank(),axis.ticks.x=element_blank(), axis.title.x=element_blank())+scale_x_discrete(name="")+ylim(0, 6250)
+```
+
